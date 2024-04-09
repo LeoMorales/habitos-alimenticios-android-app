@@ -27,7 +27,7 @@
         app:layout_constraintGuide_begin="120dp" />
 
     <TextView
-        android:id="@+id/textView_alimento_label"
+        android:id="@+id/textView_main_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -51,10 +51,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="24dp"
         android:text="Yogur bebible entero"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_alimento_label"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_main_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_alimento_label"
-        app:layout_constraintTop_toTopOf="@+id/textView_alimento_label" />
+        app:layout_constraintStart_toEndOf="@+id/textView_main_text"
+        app:layout_constraintTop_toTopOf="@+id/textView_main_text" />
 
     <TextView
         android:id="@+id/textView_porcion_label"
@@ -63,16 +63,15 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="37dp"
         android:text="Porción"
-        app:layout_constraintEnd_toEndOf="@+id/textView_alimento_label"
+        app:layout_constraintEnd_toEndOf="@+id/textView_main_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_alimento_label" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_main_text" />
 
-    <TextView
-        android:id="@+id/textView_porcion_value"
+    <Spinner
+        android:id="@+id/spinner_porcion_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/textView_porcion_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"

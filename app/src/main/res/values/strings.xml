@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Habitos Alimenticios</string>
+
+    <string-array name="portions_array">
+        <item>200ml</item>
+        <item>250ml</item>
+    </string-array>
 </resources>
