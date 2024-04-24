@@ -5,4 +5,11 @@
         <item>200ml</item>
         <item>250ml</item>
     </string-array>
+
+    <string-array name="freq_array">
+        <item>Día</item>
+        <item>Semana</item>
+        <item>Mes</item>
+        <item>Año</item>
+    </string-array>
 </resources>

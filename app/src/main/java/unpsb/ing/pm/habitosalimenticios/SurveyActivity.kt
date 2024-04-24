@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -33,14 +32,13 @@ class SurveyActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener 
                 ConfirmationActivity::class.java
             )
 
-            Toast.makeText(applicationContext, selected_portion, Toast.LENGTH_SHORT).show()
-
+            //Toast.makeText(applicationContext, selected_portion, Toast.LENGTH_SHORT).show()
             i.putExtra("SELECTED_PORTION", selected_portion)
             startActivity(i)
         }
 
-        val spinner = binding.spinnerPorcionValue
-        spinner.onItemSelectedListener = this
+        val spinner_portion = binding.spinnerPorcionValue
+        spinner_portion.onItemSelectedListener = this
 
         // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter.createFromResource(
@@ -51,8 +49,35 @@ class SurveyActivity : AppCompatActivity(),  AdapterView.OnItemSelectedListener 
             // Specify the layout to use when the list of choices appears.
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner.
-            spinner.adapter = adapter
+            spinner_portion.adapter = adapter
         }
+
+        val spinner_frequency = binding.spinnerFrecuenciaValue
+
+        // Create an ArrayAdapter using the string array and a default spinner layout.
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.portions_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears.
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner.
+            spinner_portion.adapter = adapter
+        }
+
+        // Create an ArrayAdapter using the string array and a default spinner layout.
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.freq_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears.
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner.
+            spinner_frequency.adapter = adapter
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
