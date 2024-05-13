@@ -34,10 +34,19 @@ android {
         jvmTarget = "1.8"
     }
 
-    buildFeatures.viewBinding = true
+    //buildFeatures.viewBinding = true
+    buildFeatures.dataBinding = true
 }
 
 dependencies {
+    val lifecycle_version = "2.7.0"
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    // Saved state module for ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+
     val nav_version = "2.7.7"
 
     // Kotlin
