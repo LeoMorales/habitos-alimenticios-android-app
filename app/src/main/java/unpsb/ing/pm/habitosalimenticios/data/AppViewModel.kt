@@ -14,7 +14,6 @@ class AppViewModel: ViewModel() {
         Color.rgb(0, 0, 255),
         Color.rgb(0, 255, 0),
         Color.rgb(255, 255, 0),
-        Color.rgb(0, 0, 0),
         Color.MAGENTA,
         Color.CYAN
     )
