@@ -28,6 +28,10 @@ class AppViewModel: ViewModel() {
     val currentColor : LiveData<Int>
         get() = _currentColor
 
+    private val _currentPorcion = MutableLiveData<String>()
+    val currentPorcion : LiveData<String>
+        get() = _currentPorcion
+
 // Logic of application
 
     init {
@@ -40,6 +44,9 @@ class AppViewModel: ViewModel() {
         _currentColor.value = colorList[getRandomValue(0, colorList.size)]
     }
 
+    fun cambiarPorcion(newPorcion: String){
+        _currentPorcion.value = newPorcion
+    }
     // This function returns a random number between 0 to size of list.
     private fun getRandomValue(start : Int, end: Int): Int {
         return Random.nextInt(start, end);

@@ -10,16 +10,19 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import unpsb.ing.pm.habitosalimenticios.R
-import unpsb.ing.pm.habitosalimenticios.data.AppViewModel
+import unpsb.ing.pm.habitosalimenticios.SurveysApplication
+import unpsb.ing.pm.habitosalimenticios.data.SurveyViewModel
+import unpsb.ing.pm.habitosalimenticios.data.SurveyViewModelFactory
 import unpsb.ing.pm.habitosalimenticios.databinding.FragmentSurveyBinding
+import unpsb.ing.pm.habitosalimenticios.db.entities.Survey
 
-class SurveyFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class SurveyFragment : Fragment() {
 
     private var _binding: FragmentSurveyBinding? = null
     private val binding get() = _binding!!
-    private lateinit var selectedPortion: String
-    private val viewModel : AppViewModel by viewModels()
-
+    private val viewModel : SurveyViewModel by viewModels {
+        SurveyViewModelFactory((activity?.application as SurveysApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,24 +32,33 @@ class SurveyFragment : Fragment(), AdapterView.OnItemSelectedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_survey, container, false)
 
-        val view = binding.root
+        val root = binding.root
 
         binding.appViewModel = viewModel
         // Specify the fragment as the lifecycle owner of the binding.
         // This is used so that the binding can observe LiveData updates
         binding.lifecycleOwner = this
 
-        binding.textViewTitle.setOnClickListener {
+        binding.textViewTitle.setOnClickListener{
             viewModel.getColor()
         }
-        // Inflate the layout for this fragment
-        val spinnerPortion = binding.spinnerPorcionValue
-        spinnerPortion.onItemSelectedListener = this
 
-        val spinner_frequency = binding.spinnerFrecuenciaValue
+        binding.buttonSave.setOnClickListener {
+            viewModel.insert(Survey("Yoguuur"))
+        }
+        setupSelectors(binding)
+
+        return root
+
+    }
+
+    private fun setupSelectors(binding: FragmentSurveyBinding) {
+
+        val spinnerPortionSelector = binding.spinnerPorcionValue
 
         // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter.createFromResource(
@@ -57,8 +69,22 @@ class SurveyFragment : Fragment(), AdapterView.OnItemSelectedListener {
             // Specify the layout to use when the list of choices appears.
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner.
-            spinnerPortion.adapter = adapter
+            spinnerPortionSelector.adapter = adapter
         }
+
+        spinnerPortionSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                // Toma el ítem seleccionado
+                val selectedPortion = parent.adapter.getItem(position).toString()
+                viewModel.cambiarPorcion(selectedPortion)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Otra acción cuando no se selecciona nada, si es necesario
+            }
+        }
+
+        val spinner_frequency = binding.spinnerFrecuenciaValue
 
         // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter.createFromResource(
@@ -71,20 +97,7 @@ class SurveyFragment : Fragment(), AdapterView.OnItemSelectedListener {
             // Apply the adapter to the spinner.
             spinner_frequency.adapter = adapter
         }
-        return view
 
-    }
-
-
-    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-        // An item is selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos).
-
-        selectedPortion = parent.adapter.getItem(pos).toString()
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>) {
-        // Another interface callback.
     }
 
     override fun onDestroyView() {
