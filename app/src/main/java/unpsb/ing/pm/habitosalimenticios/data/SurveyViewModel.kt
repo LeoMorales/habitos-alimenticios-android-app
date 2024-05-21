@@ -20,7 +20,7 @@ class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    val allWords: LiveData<List<Survey>> = repository.allSurveys.asLiveData()
+    val allSurveys: LiveData<List<Survey>> = repository.allSurveys.asLiveData()
 
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
@@ -29,12 +29,16 @@ class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
         repository.insert(survey)
     }
 
-    private val _currentPorcion = MutableLiveData<String>()
-    val currentPorcion : LiveData<String>
-        get() = _currentPorcion
+    private val _currentPortion = MutableLiveData<String>("200ml")
+    val currentPortion : LiveData<String>
+        get() = _currentPortion
 
-    fun cambiarPorcion(newPorcion: String){
-        _currentPorcion.value = newPorcion
+    private val _currentFrequency = MutableLiveData<String>("semana")
+    val currentFrequency : LiveData<String>
+        get() = _currentFrequency
+
+    fun changePortionValue(newPortion: String){
+        _currentPortion.value = newPortion
     }
 
     // List of colors
@@ -61,6 +65,10 @@ class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
     }
     private fun getRandomValue(start : Int, end: Int): Int {
         return Random.nextInt(start, end);
+    }
+
+    fun changeFrequencyValue(newFrequency: String) {
+        _currentFrequency.value = newFrequency
     }
 
 }

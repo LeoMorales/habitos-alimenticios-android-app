@@ -10,12 +10,12 @@ import unpsb.ing.pm.habitosalimenticios.db.entities.Survey
 @Dao
 interface SurveyDao {
 
-    @Query("SELECT * FROM survey_table ORDER BY food ASC")
+    @Query("SELECT * FROM Survey ORDER BY food ASC")
     fun getAlphabetizedSurveys(): Flow<List<Survey>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(survey: Survey)
 
-    @Query("DELETE FROM survey_table")
+    @Query("DELETE FROM Survey")
     suspend fun deleteAll()
 }

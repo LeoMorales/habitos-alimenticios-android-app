@@ -18,5 +18,9 @@
         android:id="@+id/surveyFragment"
         android:name="unpsb.ing.pm.habitosalimenticios.destinations.SurveyFragment"
         android:label="fragment_survey"
-        tools:layout="@layout/fragment_survey" />
+        tools:layout="@layout/fragment_survey" >
+        <action
+            android:id="@+id/action_back_to_start"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

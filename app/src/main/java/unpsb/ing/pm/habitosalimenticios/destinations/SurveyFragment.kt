@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import unpsb.ing.pm.habitosalimenticios.R
 import unpsb.ing.pm.habitosalimenticios.SurveysApplication
 import unpsb.ing.pm.habitosalimenticios.data.SurveyViewModel
@@ -43,17 +45,29 @@ class SurveyFragment : Fragment() {
         // This is used so that the binding can observe LiveData updates
         binding.lifecycleOwner = this
 
+        setupClickListeners(binding, viewModel)
+        setupSelectors(binding)
+
+        return root
+
+    }
+
+    private fun setupClickListeners(binding: FragmentSurveyBinding, viewModel: SurveyViewModel) {
+
         binding.textViewTitle.setOnClickListener{
             viewModel.getColor()
         }
 
         binding.buttonSave.setOnClickListener {
-            viewModel.insert(Survey("Yoguuur"))
+            viewModel.insert(
+                Survey(
+                    food = "Yogur",
+                    portion = viewModel.currentPortion.value.toString(),
+                    frequency = viewModel.currentFrequency.value.toString()))
+
+            Toast.makeText(context, "Nueva encuesta creada", Toast.LENGTH_SHORT ).show()
+            findNavController().navigate(R.id.action_back_to_start)
         }
-        setupSelectors(binding)
-
-        return root
-
     }
 
     private fun setupSelectors(binding: FragmentSurveyBinding) {
@@ -75,8 +89,16 @@ class SurveyFragment : Fragment() {
         spinnerPortionSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 // Toma el ítem seleccionado
-                val selectedPortion = parent.adapter.getItem(position).toString()
-                viewModel.cambiarPorcion(selectedPortion)
+                //val selectedPortion = parent.adapter.getItem(position).toString()
+                //viewModel.changePortionValue(selectedPortion)
+                when (position) {
+                    0 -> viewModel.changePortionValue("200ml")
+                    1 -> viewModel.changeFrequencyValue("250ml")
+                    else -> {
+                        print("no válido!")
+                    }
+                }
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -96,6 +118,27 @@ class SurveyFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner.
             spinner_frequency.adapter = adapter
+        }
+
+        spinner_frequency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                // Toma el ítem seleccionado
+                //val selectedFrequency = parent.adapter.getItem(position).toString()
+                when (position) {
+                    0 -> viewModel.changeFrequencyValue("dia")
+                    1 -> viewModel.changeFrequencyValue("semana")
+                    2 -> viewModel.changeFrequencyValue("mes")
+                    3 -> viewModel.changeFrequencyValue("año")
+                    else -> {
+                        print("no válido!")
+                    }
+                }
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Otra acción cuando no se selecciona nada, si es necesario
+            }
         }
 
     }
