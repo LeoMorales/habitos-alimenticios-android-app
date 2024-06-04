@@ -13,8 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import unpsb.ing.pm.habitosalimenticios.R
 import unpsb.ing.pm.habitosalimenticios.SurveysApplication
-import unpsb.ing.pm.habitosalimenticios.data.SurveyViewModel
-import unpsb.ing.pm.habitosalimenticios.data.SurveyViewModelFactory
+import unpsb.ing.pm.habitosalimenticios.viewmodels.SurveyViewModel
+import unpsb.ing.pm.habitosalimenticios.viewmodels.SurveyViewModelFactory
 import unpsb.ing.pm.habitosalimenticios.databinding.FragmentSurveyBinding
 import unpsb.ing.pm.habitosalimenticios.db.entities.Survey
 
@@ -22,7 +22,7 @@ class SurveyFragment : Fragment() {
 
     private var _binding: FragmentSurveyBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : SurveyViewModel by viewModels {
+    private val surveyViewModel : SurveyViewModel by viewModels {
         SurveyViewModelFactory((activity?.application as SurveysApplication).repository)
     }
 
@@ -40,12 +40,12 @@ class SurveyFragment : Fragment() {
 
         val root = binding.root
 
-        binding.appViewModel = viewModel
+        binding.appViewModel = surveyViewModel
         // Specify the fragment as the lifecycle owner of the binding.
         // This is used so that the binding can observe LiveData updates
         binding.lifecycleOwner = this
 
-        setupClickListeners(binding, viewModel)
+        setupClickListeners(binding, surveyViewModel)
         setupSelectors(binding)
 
         return root
@@ -67,6 +67,10 @@ class SurveyFragment : Fragment() {
 
             Toast.makeText(context, "Nueva encuesta creada", Toast.LENGTH_SHORT ).show()
             findNavController().navigate(R.id.action_back_to_start)
+        }
+
+        binding.buttonOpenMap.setOnClickListener {
+            findNavController().navigate(R.id.action_open_map)
         }
     }
 
@@ -92,43 +96,8 @@ class SurveyFragment : Fragment() {
                 //val selectedPortion = parent.adapter.getItem(position).toString()
                 //viewModel.changePortionValue(selectedPortion)
                 when (position) {
-                    0 -> viewModel.changePortionValue("200ml")
-                    1 -> viewModel.changeFrequencyValue("250ml")
-                    else -> {
-                        print("no válido!")
-                    }
-                }
-
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Otra acción cuando no se selecciona nada, si es necesario
-            }
-        }
-
-        val spinner_frequency = binding.spinnerFrecuenciaValue
-
-        // Create an ArrayAdapter using the string array and a default spinner layout.
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.freq_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears.
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner.
-            spinner_frequency.adapter = adapter
-        }
-
-        spinner_frequency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                // Toma el ítem seleccionado
-                //val selectedFrequency = parent.adapter.getItem(position).toString()
-                when (position) {
-                    0 -> viewModel.changeFrequencyValue("dia")
-                    1 -> viewModel.changeFrequencyValue("semana")
-                    2 -> viewModel.changeFrequencyValue("mes")
-                    3 -> viewModel.changeFrequencyValue("año")
+                    0 -> surveyViewModel.changePortionValue("200ml")
+                    1 -> surveyViewModel.changePortionValue("250ml")
                     else -> {
                         print("no válido!")
                     }

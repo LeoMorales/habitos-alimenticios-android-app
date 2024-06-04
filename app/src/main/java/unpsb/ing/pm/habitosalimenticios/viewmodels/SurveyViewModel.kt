@@ -1,4 +1,4 @@
-package unpsb.ing.pm.habitosalimenticios.data
+package unpsb.ing.pm.habitosalimenticios.viewmodels
 
 import android.graphics.Color
 import androidx.lifecycle.LiveData
@@ -11,8 +11,6 @@ import kotlinx.coroutines.launch
 import unpsb.ing.pm.habitosalimenticios.db.SurveyRepository
 import unpsb.ing.pm.habitosalimenticios.db.entities.Survey
 import kotlin.random.Random
-
-
 
 class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
 
@@ -67,8 +65,20 @@ class SurveyViewModel(private val repository: SurveyRepository) : ViewModel() {
         return Random.nextInt(start, end);
     }
 
-    fun changeFrequencyValue(newFrequency: String) {
-        _currentFrequency.value = newFrequency
+    fun changeFrequencyDay() {
+        _currentFrequency.value = "día"
+    }
+
+    fun changeFrequencyWeek() {
+        _currentFrequency.value = "semana"
+    }
+
+    fun changeFrequencyMonth() {
+        _currentFrequency.value = "mes"
+    }
+
+    fun changeFrequencyYear() {
+        _currentFrequency.value = "año"
     }
 
 }

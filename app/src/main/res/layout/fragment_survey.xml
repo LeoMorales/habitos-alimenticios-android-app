@@ -6,7 +6,7 @@
     <data>
         <variable
             name="appViewModel"
-            type="unpsb.ing.pm.habitosalimenticios.data.SurveyViewModel" />
+            type="unpsb.ing.pm.habitosalimenticios.viewmodels.SurveyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/textView_porcion_label" />
 
-        <Spinner
+        <LinearLayout
             android:id="@+id/spinner_frecuencia_value"
             android:layout_width="247dp"
             android:layout_height="61dp"
@@ -43,7 +43,40 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView_frecuencia_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/textView_frecuencia_label" />
+            app:layout_constraintTop_toTopOf="@+id/textView_frecuencia_label" >
+
+            <Button
+                android:id="@+id/button_frequency_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="D"
+                android:onClick="@{() -> appViewModel.changeFrequencyDay()}"/>
+
+            <Button
+                android:id="@+id/button_frequency_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="S"
+                android:onClick="@{() -> appViewModel.changeFrequencyWeek()}"/>
+
+            <Button
+                android:id="@+id/button_frequency_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="M"
+                android:onClick="@{() -> appViewModel.changeFrequencyMonth()}"/>
+
+            <Button
+                android:id="@+id/button_frequency_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="A"
+                android:onClick="@{() -> appViewModel.changeFrequencyYear()}"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView_title"
@@ -127,7 +160,8 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Se consume yougur bebible"
+            android:text="Se consume yogur bebible"
+            android:textColor="#221A1A"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/textView_portion_value"
             app:layout_constraintEnd_toEndOf="@+id/textView4"
@@ -139,6 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{appViewModel.currentPortion}"
+            android:textColor="#221A1A"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/textView7"
             app:layout_constraintEnd_toEndOf="@+id/textView5"
@@ -151,6 +186,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="una"
+            android:textColor="#221A1A"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/textView8"
             app:layout_constraintEnd_toEndOf="@+id/textView_portion_value"
@@ -163,6 +199,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{appViewModel.currentFrequency}"
+            android:textColor="#221A1A"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintEnd_toEndOf="@+id/textView8"
@@ -175,6 +212,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="vez por"
+            android:textColor="#221A1A"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/textView_frequency_value"
             app:layout_constraintEnd_toEndOf="@+id/textView7"
@@ -209,6 +247,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="356dp" />
+
+        <Button
+            android:id="@+id/button_open_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mapa"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_save"
+            app:layout_constraintTop_toTopOf="@+id/textView_frequency_value" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
